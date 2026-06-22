@@ -108,6 +108,23 @@ export default function LandingPage() {
           return;
         }
 
+        // Trigger Netlify Serverless Function to send SMTP email securely
+        fetch('/.netlify/functions/send-lead-email', {
+          method: 'POST',
+          body: JSON.stringify({
+            customerName: formData.name,
+            phoneNumber: formData.phone,
+            emailAddress: formData.email,
+            projectLocation: formData.location,
+            projectType: typeVal,
+            projectAreaSqft: parseInt(formData.area) || 0,
+            estimatedBudget: formData.budget,
+            completionTimeline: formData.timeline,
+            leadSource: "Landing Page",
+            requirements: combinedRequirements
+          })
+        }).catch(err => console.error("SMTP Function error:", err));
+
         setNotification({ type: 'success', message: 'Enquiry ingested successfully! Redirecting to contact desk details page...' });
         
         setFormData({ name: '', phone: '', email: '', location: '', area: '', budget: '', timeline: '', requirements: '' });
