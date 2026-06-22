@@ -1,0 +1,5 @@
+# Configuration for the CRM Dashboard (Default)
+[build]
+  base = "artifacts/arkoo-crm-frontend"
+  command = "pnpm run build"
+  publish = "dist"
