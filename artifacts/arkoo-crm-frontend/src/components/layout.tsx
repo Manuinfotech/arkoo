@@ -29,8 +29,8 @@ export function Layout({ children }: { children: ReactNode }) {
         
         <nav className="flex-1 overflow-y-auto p-4 space-y-4">
           <div className="space-y-1.5">
-            <Link href="/">
-              <div className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all cursor-pointer premium-sidebar-link ${location === '/' ? 'premium-sidebar-link-active' : ''}`}>
+            <Link href="/dashboard">
+              <div className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all cursor-pointer premium-sidebar-link ${location === '/dashboard' ? 'premium-sidebar-link-active' : ''}`}>
                 <LayoutDashboard className="w-4 h-4" />
                 Dashboard
               </div>
@@ -127,8 +127,8 @@ export function Layout({ children }: { children: ReactNode }) {
 
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 h-16 bg-card/95 border-t flex md:hidden items-center justify-around px-2 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] backdrop-blur-md no-print">
-        <Link href="/">
-          <div className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all cursor-pointer ${location === '/' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground'}`}>
+        <Link href="/dashboard">
+          <div className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all cursor-pointer ${location === '/dashboard' ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground'}`}>
             <LayoutDashboard className="w-5 h-5" />
             <span className="text-[10px]">Dashboard</span>
           </div>

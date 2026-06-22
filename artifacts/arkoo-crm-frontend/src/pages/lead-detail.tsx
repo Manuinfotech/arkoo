@@ -69,7 +69,7 @@ export default function LeadDetail() {
       <Layout>
         <div className="text-center py-12">
           <h2 className="text-2xl font-bold mb-2">Lead not found</h2>
-          <Link href="/">
+          <Link href="/dashboard">
             <Button variant="outline"><ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard</Button>
           </Link>
         </div>
@@ -96,7 +96,7 @@ export default function LeadDetail() {
     <Layout>
       <div className="space-y-6 max-w-6xl mx-auto">
         <div className="flex items-center gap-4">
-          <Link href="/">
+          <Link href="/dashboard">
             <Button variant="ghost" size="icon" className="rounded-full w-8 h-8">
               <ArrowLeft className="w-4 h-4" />
             </Button>

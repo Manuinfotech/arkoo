@@ -14,6 +14,8 @@ import GeneratePIF from "@/pages/generate-pif";
 import LandingLeads from "@/pages/landing-leads";
 import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/components/protected-route";
+import LandingPage from "@/pages/landing";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -26,9 +28,10 @@ const queryClient = new QueryClient({
 function Router() {
   return (
     <Switch>
+      <Route path="/" component={LandingPage} />
       <Route path="/login" component={Login} />
       <Route path="/apply" component={ApplyPage} />
-      <Route path="/">
+      <Route path="/dashboard">
         <ProtectedRoute>
           <Dashboard />
         </ProtectedRoute>
