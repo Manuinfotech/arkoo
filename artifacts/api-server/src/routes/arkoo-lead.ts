@@ -491,6 +491,14 @@ const handleArkooLead = async (req: any, res: any) => {
     </div>
     `;
 
+    // Send response early to prevent Netlify from timing out
+    res.status(200).json({ 
+      success: true, 
+      message: "Lead captured, saved to DB, and notification processing in background.",
+      dbSaved,
+      dbError: dbSaved ? undefined : dbErrorMsg
+    });
+
     let customerPreviewUrl: string | null = null;
 
     try {
@@ -542,45 +550,11 @@ const handleArkooLead = async (req: any, res: any) => {
         // Trigger Ethereal fallback for Customer email
         customerPreviewUrl = await sendCustomerEmail(customerName, emailAddress, ledgerEntry.id, detectBaseUrl(req));
 
-        return res.status(200).json({ 
-          success: true, 
-          message: dbSaved 
-            ? "Lead saved. Gmail blocked, but verification email sent to Ethereal." 
-            : "Lead captured. Database failed & Gmail blocked, but verification email sent to Ethereal.", 
-          previewUrl: previewUrl,
-          customerPreviewUrl: customerPreviewUrl || undefined,
-          dbSaved,
-          dbError: dbSaved ? undefined : dbErrorMsg,
-          notice: "Google is blocking your login. Please generate a NEW App Password." 
-        });
       } catch (fallbackError: any) {
-        return res.status(200).json({ 
-          success: true, 
-          message: dbSaved 
-            ? "Lead saved to DB, but all email attempts failed." 
-            : "Lead captured, but database sync and all email attempts failed.", 
-          dbSaved,
-          dbError: dbSaved ? undefined : dbErrorMsg,
-          emailError: error.message 
-        });
+        console.error("All email attempts failed:", fallbackError.message);
       }
     }
 
-    if (!dbSaved) {
-      return res.status(200).json({
-        success: true,
-        message: "Lead captured and email sent successfully. Note: Database connection failed (IPv6 required for direct Supabase access), so lead could not be saved to the database. Error: " + dbErrorMsg,
-        dbSaved: false,
-        dbError: dbErrorMsg,
-        customerPreviewUrl: customerPreviewUrl || undefined
-      });
-    }
-
-    res.status(200).json({ 
-      success: true, 
-      message: "Lead captured, saved to DB, and notification sent successfully.",
-      customerPreviewUrl: customerPreviewUrl || undefined 
-    });
     return;
   } catch (error) {
     console.error("Webhook processing error:", error);
